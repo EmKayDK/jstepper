@@ -99,6 +99,11 @@ function AddOrSubtractTwoFloats(fltValue1, fltValue2, bAddSubtract) {
 				$this.attr('autocomplete', 'off');
 			}
 
+		        $this.blur(function() {
+		        	CheckValue(o, this, true);
+		        });
+
+
 			if (jQuery.isFunction($this.mousewheel)) {
 				$this.mousewheel(function(objEvent, intDelta) {
 					if (intDelta > 0) { // Up
@@ -127,14 +132,14 @@ function AddOrSubtractTwoFloats(fltValue1, fltValue2, bAddSubtract) {
 
 			$this.keyup(function(e) {
 
-				CheckValue(o, this);
+				CheckValue(o, this, false);
 
 			});
 
 		});
 	};
 
-	function CheckValue(o, objElm) {
+	function CheckValue(o, objElm, checkMin) {
 
 		var $objElm = jQuery(objElm);
 
@@ -151,7 +156,7 @@ function AddOrSubtractTwoFloats(fltValue1, fltValue2, bAddSubtract) {
 			}
 		}
 
-		if (o.minValue !== null) {
+		if (o.minValue !== null && checkMin) {
 			if (strValue < o.minValue && strValue != '') {
 				strValue = o.minValue;
 			}
@@ -298,7 +303,7 @@ function AddOrSubtractTwoFloats(fltValue1, fltValue2, bAddSubtract) {
 		objElm.selectionStart = numValue.length - intSelectionStart;
 		objElm.selectionEnd = numValue.length - intSelectionEnd;
 
-		CheckValue(o, objElm);
+		CheckValue(o, objElm, true);
 
 		if (o.onStep) {
 			o.onStep($objElm, bDirection, bLimitReached);
