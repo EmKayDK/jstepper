@@ -145,6 +145,10 @@ function AddOrSubtractTwoFloats(fltValue1, fltValue2, bAddSubtract) {
 			strValue = strValue.replace(/[^\d\.,\-]/gi, '');
 		}
 
+		if (!o.allowDecimals) {
+        	    	strValue = strValue.replace(/[^\d\-]/gi, '');
+        	}
+
 		if (o.maxValue !== null) {
 			if (strValue >= o.maxValue) {
 				strValue = o.maxValue;
