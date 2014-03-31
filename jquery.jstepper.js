@@ -1,5 +1,5 @@
 ﻿
-// jStepper 1.3.2
+// jStepper 1.3.3
 
 // A jQuery plugin by EmKay usable for making a numeric textfield value easy to increase or decrease.
 
@@ -146,8 +146,8 @@ function AddOrSubtractTwoFloats(fltValue1, fltValue2, bAddSubtract) {
 		}
 
 		if (!o.allowDecimals) {
-        	    	strValue = strValue.replace(/[^\d\-]/gi, '');
-        	}
+			strValue = strValue.replace(/[^\d\-]/gi, '');
+		}
 
 		if (o.maxValue !== null) {
 			if (strValue >= o.maxValue) {
