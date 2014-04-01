@@ -1,0 +1,25 @@
+﻿body {
+	font-family: Arial;
+	font-size: 12px;
+}
+
+#jStepperDoc {
+	border-collapse: collapse;
+	width: 1000px;
+}
+
+	#jStepperDoc td {
+		border: solid 1px #CCC;
+		vertical-align: top;
+		padding: 4px;
+	}
+
+#txtScript {
+	width: 800px;
+	height: 80px;
+}
+
+.exampleCol {
+	font-family: monospace;
+	width: 460px;
+}
