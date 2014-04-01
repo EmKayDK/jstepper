@@ -21,11 +21,11 @@
 
 	Auto mousewheel support if Brandon Aaron's <a href="http://plugins.jquery.com/mousewheel/">mousewheel plugin</a> has also been included on the page (try it by hovering over the field below and scroll your mouse).
 
-	<h2>Download (v. 1.3.2)</h2>
+	<h2>Download (v. 1.4.0)</h2>
 	(Tested with jQuery 1.4, 1.11.0 and 2.1.0)<br />
 	<br />
 	<a href="/scripts/jquery.jstepper.js">Normal</a><br />
-	<a href="/scripts/jquery.jstepper.min.js">Minified for production</a><br />
+	<a href="/scripts/jquery.jstepper.min.js">Minified for production</a> (Only 3,2 KB and 1,5 KB gzipped)<br />
 	<br />
 
 	<h2>Test</h2>
@@ -45,7 +45,7 @@
 	</form>
 
 	<%=GetTestScriptTag() %>
-	
+
 	<h2>Options</h2>
 
 	<table id="jStepperDoc" class="tablehover">
@@ -186,9 +186,11 @@
 					<br />
 					&nbsp;&nbsp;alert(objTextField.val());<br />
 					<br />
-					}<br /><br />
+					}<br />
+					<br />
 
-					<strong>OR</strong><br /><br />
+					<strong>OR</strong><br />
+					<br />
 
 					$(obj).jStepper({<br />
 					&nbsp;&nbsp;onStep: function(objTextField, bDirection, bLimitReached) {<br />
@@ -216,6 +218,13 @@
 	</table>
 
 	<h1>Changelog</h1>
+
+	<h2>1.4.0 (2014-04-01)</h2>
+	<ul>
+		<li>Major rewrite of the plugin.</li>
+		<li>A few performance enhancements and bug fixes.</li>
+		<li>A lot of improvements to the documentation website.</li>
+	</ul>
 
 	<h2>1.3.3 (2014-03-31)</h2>
 	<ul>
