@@ -6,7 +6,8 @@ $(document).ready(function() {
 var KEYCODES = {
 	UP: 38,
 	DOWN: 40,
-	S: 83
+	S: 83,
+	ONE: 49
 }
 
 function RunQUnit() {
@@ -26,12 +27,13 @@ function RunQUnit() {
 
 	test('Subtracting floats', function() {
 
-		expect(5);
+		expect(6);
 		equal(jQuery.fn.jStepper.AddOrSubtractTwoFloats(0.1, 0.1, false), 0, '0.1 - 0.1 = 0');
 		equal(jQuery.fn.jStepper.AddOrSubtractTwoFloats(0.01, 0.01, false), 0, '0.01 - 0.01 = 0');
 		equal(jQuery.fn.jStepper.AddOrSubtractTwoFloats(1, 0.001, false), 0.999, '1 - 0.001 = 0.999');
 		equal(jQuery.fn.jStepper.AddOrSubtractTwoFloats(0.999, 0.001, false), 0.998, '0.999 - 0.001 = 0.998');
 		equal(jQuery.fn.jStepper.AddOrSubtractTwoFloats(0.999, 0.999, false), 0, '0.999 - 0.999 = 0');
+		equal(jQuery.fn.jStepper.AddOrSubtractTwoFloats(0.999, 1, false), -0.001, '0.999 - 1 = -0.001');
 
 	});
 
@@ -153,7 +155,7 @@ function RunQUnit() {
 
 	test('maxValue', function() {
 
-		expect(3);
+		expect(4);
 
 		objUpEvent.keyCode = KEYCODES.UP;
 		objDownEvent.keyCode = KEYCODES.UP;
@@ -176,7 +178,33 @@ function RunQUnit() {
 		$('#txtQUnit').trigger(objUpEvent);
 		equal($('#txtQUnit').val(), '10', 'Stepping up and breaking the roof');
 
+		var objThreeKeyUp = jQuery.Event('keyup');
+
+		$('#txtQUnit').unbind();
+		$('#txtQUnit').jStepper({ minValue: 0, maxValue: 23, minLength: 2, minDecimals: 3, maxDecimals: 3, decimalSeparator: '.' });
+		$('#txtQUnit').val('24');
+		$('#txtQUnit').trigger(objThreeKeyUp);
+		equal($('#txtQUnit').val(), '23.000', 'Inputting 24 with a max of 23 and minDecimals of 3');
+
 	});
+
+	test('Overflow with overflow mode set to ignore', function() {
+
+		expect(1);
+
+		objUpEvent.keyCode = KEYCODES.ONE;
+		objDownEvent.keyCode = KEYCODES.ONE;
+
+		$('#txtQUnit').unbind();
+
+		$('#txtQUnit').jStepper({ minValue: 1, maxValue: 999, minLength: 3, overflowMode: 'ignore' });
+		$('#txtQUnit').val('1111');
+		$('#txtQUnit').trigger(objDownEvent);
+		$('#txtQUnit').trigger(objUpEvent);
+		equal($('#txtQUnit').val(), '111', 'Accidentally typing 1111 in field with a max of 999');
+
+	});
+
 
 	test('minValue', function() {
 

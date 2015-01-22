@@ -1,4 +1,4 @@
-﻿// jStepper 1.4.0
+﻿// jStepper 1.4.1
 
 // A jQuery plugin by EmKay usable for making a numeric textfield value easy to increase or decrease.
 
@@ -69,7 +69,7 @@
 			}
 
 			if (o.maxValue !== null) {
-				if (strValue >= o.maxValue) {
+				if (strValue > o.maxValue) {
 					strValue = o.maxValue;
 				}
 			}
@@ -245,11 +245,11 @@
 		if (strNumber1.indexOf('.') > -1 || strNumber2.indexOf('.') > -1) {
 
 			// If no decimals on one of them, then put them on!
-			if (strNumber1.indexOf('.') == -1) {
+			if (strNumber1.indexOf('.') === -1) {
 				strNumber1 = strNumber1 + '.0';
 			}
 
-			if (strNumber2.indexOf('.') == -1) {
+			if (strNumber2.indexOf('.') === -1) {
 				strNumber2 = strNumber2 + '.0';
 			}
 

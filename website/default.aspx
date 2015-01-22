@@ -150,7 +150,7 @@
 			<tr>
 				<td>maxDecimals</td>
 				<td>Integer</td>
-				<td>infinite</td>
+				<td>Infinite</td>
 				<td>The maximum allowed number of decimals. If more are found, the last ones are simply cut away. No rounding is applied.</td>
 				<td class="exampleCol">$(obj).jStepper({maxDecimals:4});</td>
 			</tr>
