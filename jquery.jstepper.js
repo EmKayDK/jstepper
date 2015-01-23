@@ -1,59 +1,108 @@
-﻿// jStepper 1.4.1
+﻿// jStepper 1.5.0
 
 // A jQuery plugin by EmKay usable for making a numeric textfield value easy to increase or decrease.
 
 (function(jQuery) {
 
-	jQuery.fn.jStepper = function(options) {
+	jQuery.fn.jStepper = function(param1, param2, param3) {
 
 		if (this.length > 1) {
-			this.each(function() { $(this).jStepper(options) });
+			this.each(function() { $(this).jStepper(param1) });
 			return this;
 		}
 
-		var o = jQuery.extend({}, jQuery.fn.jStepper.defaults, options);
+		if (typeof param1 === 'string') {
+
+			if (param1 === 'option') {
+
+				if (param3 === null) {
+					param3 = jQuery.fn.jStepper.defaults[param2];
+				}
+
+				this.data('jstepper.o')[param2] = param3;
+			}
+
+			return this;
+
+		}
+
+		var o = jQuery.extend({}, jQuery.fn.jStepper.defaults, param1);
 
 		if (jQuery.metadata) {
 			o = jQuery.extend({}, o, this.metadata());
 		}
+
+		this.data('jstepper.o', o);
 
 		if (o.disableAutocomplete) {
 			this.attr('autocomplete', 'off');
 		}
 
 		if (jQuery.isFunction(this.mousewheel)) {
-			this.mousewheel(function(objEvent, intDelta) {
+			this.mousewheel(function(e, intDelta) {
 				if (intDelta > 0) { // Up
-					MakeStep(o, 1, objEvent, this);
+
+					var objDownEvent = jQuery.Event('keydown');
+					objDownEvent.keyCode = 38;
+
+					MakeStep(1, objDownEvent, this);
 					return false;
 				}
 				else if (intDelta < 0) { // Down
-					MakeStep(o, 0, objEvent, this);
+
+					var objDownEvent = jQuery.Event('keydown');
+					objDownEvent.keyCode = 40;
+
+					MakeStep(0, objDownEvent, this);
 					return false;
 				}
 			});
 		}
 
+		this.blur(function() {
+			CheckValue(this, null);
+		});
+
 		this.keydown(function(e) {
+
 			var key = e.keyCode;
 
 			if (key === 38) { // Up
-				MakeStep(o, 1, e, this);
-			}
+				MakeStep(1, e, this);
+			} else if (key === 40) { // Down
+				MakeStep(0, e, this);
+			} else {
 
-			if (key === 40) { // Down
-				MakeStep(o, 0, e, this);
+				if (o.overflowMode === 'ignore') {
+
+					if (o.maxValue) {
+
+						if ($(this).val().length >= o.maxValue.toString().length) {
+
+							if (
+								((key >= 48 && key <= 57) || (key >= 96 && key <= 105)) &&
+								(this.selectionStart === this.selectionEnd)
+								) {
+								return false;
+							}
+
+						}
+
+					}
+
+				}
+
 			}
 
 		});
 
 		this.keyup(function(e) {
 
-			CheckValue(o, this);
+			CheckValue(this, e);
 
 		});
 
-		var CheckValue = function(o, objElm) {
+		var CheckValue = function(objElm, key) {
 
 			var $objElm = jQuery(objElm);
 
@@ -64,20 +113,24 @@
 				strValue = strValue.replace(/[^\d\.,\-]/gi, '');
 			}
 
-			if (!o.allowDecimals) {
-				strValue = strValue.replace(/[^\d\-]/gi, '');
-			}
+			var bOverflow = false;
 
 			if (o.maxValue !== null) {
 				if (strValue > o.maxValue) {
 					strValue = o.maxValue;
+					bOverflow = true;
 				}
 			}
 
 			if (o.minValue !== null) {
 				if (strValue < o.minValue && strValue != '') {
 					strValue = o.minValue;
+					bOverflow = true;
 				}
+			}
+
+			if (IsUpOrDownKey(key) === true || key === null || bOverflow === true) {
+				strValue = DoTheChecks(strValue);
 			}
 
 			if (initialStrValue != strValue) {
@@ -86,17 +139,17 @@
 
 		};
 
-		var MakeStep = function(o, bDirection, keydown, objElm) {
+		var MakeStep = function(bDirection, key, objElm) {
 
 			var $objElm = jQuery(objElm);
 
 			var stepToUse;
 
-			if (keydown) {
+			if (key) {
 
-				if (keydown.ctrlKey) {
+				if (key.ctrlKey) {
 					stepToUse = o.ctrlStep;
-				} else if (keydown.shiftKey) {
+				} else if (key.shiftKey) {
 					stepToUse = o.shiftStep;
 				} else {
 					stepToUse = o.normalStep;
@@ -153,81 +206,143 @@
 				}
 			}
 
-			numValue = numValue + '';
-
-			if (o.minLength !== null) {
-				var intLengthNow = numValue.length;
-
-				if (numValue.indexOf('.') != -1) {
-					intLengthNow = numValue.indexOf('.');
-				}
-				var bIsNegative = false;
-				if (numValue.indexOf('-') != -1) {
-					bIsNegative = true;
-					numValue = numValue.replace(/-/, '');
-				}
-
-				if (intLengthNow < o.minLength) {
-					for (var i = 1; i <= (o.minLength - intLengthNow) ; i++) {
-						numValue = '0' + numValue;
-					}
-				}
-
-				if (bIsNegative) {
-					numValue = '-' + numValue;
-				}
-
-			}
-
-			numValue = numValue + '';
-
-			var intDecimalsNow;
-
-			if (o.minDecimals > 0) {
-				var intDecimalsMissing;
-				if (numValue.indexOf('.') != -1) {
-					intDecimalsNow = numValue.length - (numValue.indexOf('.') + 1);
-					if (intDecimalsNow < o.minDecimals) {
-						intDecimalsMissing = o.minDecimals - intDecimalsNow;
-					}
-				} else {
-					intDecimalsMissing = o.minDecimals;
-					numValue = numValue + '.';
-				}
-				for (var intDecimalIndex = 1; intDecimalIndex <= intDecimalsMissing; intDecimalIndex++) {
-					numValue = numValue + '0';
-				}
-			}
-
-			if (o.maxDecimals > 0) {
-				intDecimalsNow = 0;
-				if (numValue.indexOf('.') != -1) {
-					intDecimalsNow = numValue.length - (numValue.indexOf('.') + 1);
-					if (o.maxDecimals < intDecimalsNow) {
-						numValue = numValue.substring(0, numValue.indexOf('.')) + '.' + numValue.substring(numValue.indexOf('.') + 1, numValue.indexOf('.') + 1 + o.maxDecimals);
-					}
-				}
-			}
-
-			if (!o.allowDecimals) {
-				numValue = numValue + '';
-				numValue = numValue.replace(new RegExp('[\\.].+'), '');
-			}
-
-			numValue = numValue.replace(/\./, o.decimalSeparator);
+			numValue = numValue.toString().replace(/\./, o.decimalSeparator);
 
 			$objElm.val(numValue);
 
 			objElm.selectionStart = numValue.length - intSelectionStart;
 			objElm.selectionEnd = numValue.length - intSelectionEnd;
 
-			CheckValue(o, objElm);
+			CheckValue(objElm, key);
 
 			if (o.onStep) {
 				o.onStep($objElm, bDirection, bLimitReached);
 			}
 
 			return false;
+
+		};
+
+		var DoTheChecks = function(strValue) {
+
+			var strResult = strValue.toString();
+			strResult = CheckMinDecimals(strResult);
+			strResult = CheckMaxDecimals(strResult);
+			strResult = CheckAllowDecimals(strResult);
+			strResult = CheckMinLength(strResult);
+
+			return strResult;
+
+		};
+
+		var CheckMinDecimals = function(strValue) {
+
+			var strResult = strValue;
+
+			if (o.minDecimals > 0) {
+				var intDecimalsMissing;
+				if (strResult.indexOf('.') != -1) {
+					var intDecimalsNow = strResult.length - (strResult.indexOf('.') + 1);
+					if (intDecimalsNow < o.minDecimals) {
+						intDecimalsMissing = o.minDecimals - intDecimalsNow;
+					}
+				} else {
+					intDecimalsMissing = o.minDecimals;
+					strResult = strResult + '.';
+				}
+				for (var intDecimalIndex = 1; intDecimalIndex <= intDecimalsMissing; intDecimalIndex++) {
+					strResult = strResult + '0';
+				}
+			}
+
+			return strResult;
+
+		};
+
+		var CheckMaxDecimals = function(strValue) {
+
+			var strResult = strValue;
+
+			if (o.maxDecimals > 0) {
+				var intDecimalsNow = 0;
+				if (strResult.indexOf('.') != -1) {
+					intDecimalsNow = strResult.length - (strResult.indexOf('.') + 1);
+					if (o.maxDecimals < intDecimalsNow) {
+						strResult = strResult.substring(0, strResult.indexOf('.')) + '.' + strResult.substring(strResult.indexOf('.') + 1, strResult.indexOf('.') + 1 + o.maxDecimals);
+					}
+				}
+			}
+
+			return strResult;
+
+		};
+
+		var CheckAllowDecimals = function(strValue) {
+
+			var strResult = strValue;
+
+			if (!o.allowDecimals) {
+
+				strResult = strResult.toString().replace(o.decimalSeparator, '.');
+				strResult = strResult.replace(new RegExp('[\\.].+'), '');
+
+			}
+
+			return strResult;
+
+		};
+
+		var CheckMinLength = function(strValue) {
+
+			var strResult = strValue;
+
+			if (o.minLength !== null) {
+				var intLengthNow = strResult.length;
+
+				if (strResult.indexOf('.') != -1) {
+					intLengthNow = strResult.indexOf('.');
+				}
+				var bIsNegative = false;
+				if (strResult.indexOf('-') != -1) {
+					bIsNegative = true;
+					strResult = strResult.replace(/-/, '');
+				}
+
+				if (intLengthNow < o.minLength) {
+					for (var i = 1; i <= (o.minLength - intLengthNow) ; i++) {
+						strResult = '0' + strResult;
+					}
+				}
+
+				if (bIsNegative) {
+					strResult = '-' + strResult;
+				}
+
+			}
+
+			return strResult;
+
+		};
+
+		var IsUpOrDownKey = function(key) {
+
+			var bResult = false;
+
+			if (key !== null) {
+
+				if (key.keyCode === 38 || key.keyCode === 40) {
+					bResult = true;
+				}
+
+			}
+
+			return bResult;
+
+		};
+
+		var GetOption = function(strOptionName) {
+
+			return this.data('jstepper.o')[strOptionName];
 
 		};
 
@@ -295,6 +410,13 @@
 				intResult = intInteger1 - intInteger2;
 			}
 
+			var bIsNegative = false;
+
+			if (intResult < 0) {
+				bIsNegative = true;
+				intResult = Math.abs(intResult);
+			}
+
 			strResult = intResult.toString();
 
 			for (var intZerosAdded = 0; intZerosAdded < ((intOriginalDecimalLength - strResult.length) + 1) ; intZerosAdded++) {
@@ -303,6 +425,10 @@
 
 			if (strResult.length >= intOriginalDecimalLength) {
 				strResult = strResult.substring(0, strResult.length - intOriginalDecimalLength) + '.' + strResult.substring(strResult.length - intOriginalDecimalLength);
+			}
+
+			if (bIsNegative === true) {
+				strResult = '-' + strResult;
 			}
 
 		} else {
@@ -332,7 +458,8 @@
 		minDecimals: 0,
 		maxDecimals: null,
 		disableNonNumeric: true,
-		onStep: null
+		onStep: null,
+		overflowMode: 'default'
 	};
 
 })(jQuery);

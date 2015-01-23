@@ -21,11 +21,11 @@
 
 	Auto mousewheel support if Brandon Aaron's <a href="http://plugins.jquery.com/mousewheel/">mousewheel plugin</a> has also been included on the page (try it by hovering over the field below and scroll your mouse).
 
-	<h2>Download (v. 1.4.0)</h2>
-	(Tested with jQuery 1.4, 1.11.0 and 2.1.0)<br />
+	<h2>Download (v. 1.5.0)</h2>
+	(Tested with jQuery 1.4, 1.11.2 and 2.1.3 in IE11, Firefox, Chrome and Safari)<br />
 	<br />
 	<a href="/scripts/jquery.jstepper.js">Normal</a><br />
-	<a href="/scripts/jquery.jstepper.min.js">Minified for production</a> (Only 3,2 KB and 1,5 KB gzipped)<br />
+	<a href="/scripts/jquery.jstepper.min.js">Minified for production</a> (Only 4,0 KB and 1,8 KB gzipped)<br />
 	<br />
 
 	<h2>Test</h2>
@@ -164,6 +164,27 @@
 			</tr>
 
 			<tr>
+				<td>overflowMode</td>
+				<td>string</td>
+				<td>default</td>
+				<td>This controls how overflowing is handled. Consider the following example:<br />
+					<br />
+					{maxValue:999}<br />
+					<br />
+					If "1111" is typed in the field, the field will revert to the maxValue, which is "999".<br />
+					<br />
+					If overflowMode is set to 'ignore' like this;<br />
+					<br />
+					{maxValue:999, overflowMode:'ignore'}<br />
+					<br />
+					then the last press of the "1" key is simply ignored.<br />
+					<br />
+					This option only has an effect if maxValue also is set.
+				</td>
+				<td class="exampleCol">$(obj).jStepper({overflowMode:'ignore'});</td>
+			</tr>
+
+			<tr>
 				<td>onStep</td>
 				<td>Function</td>
 				<td>null</td>
@@ -217,7 +238,23 @@
 
 	</table>
 
+	<h3>Setting options after initialization</h3>
+	You can set any of the options after initialization of jStepper like this:<br />
+	$(obj).jStepper('option', 'maxValue', 60);<br />
+	<br />
+
+	If you want to revert the option to the default value, then simply set it to null:
+	$(obj).jStepper('option', 'maxValue', null);
+	
 	<h1>Changelog</h1>
+
+	<h2>1.5.0 (2015-01-24)</h2>
+	<ul>
+		<li>A few bugfixes reported at Github. Thanks, jedierikb!</li>
+		<li>It's now possible to change options after initialization.</li>
+		<li>Added the overflowMode option.</li>
+		<li>Updated the targeted browsers and jQuery versions.</li>
+	</ul>
 
 	<h2>1.4.0 (2014-04-01)</h2>
 	<ul>

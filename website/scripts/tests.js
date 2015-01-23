@@ -8,7 +8,7 @@ var KEYCODES = {
 	DOWN: 40,
 	S: 83,
 	ONE: 49
-}
+};
 
 function RunQUnit() {
 
@@ -153,7 +153,9 @@ function RunQUnit() {
 
 	});
 
-	test('maxValue', function() {
+	test('maxValue', function(assert) {
+
+		var done = assert.async();
 
 		expect(4);
 
@@ -182,13 +184,19 @@ function RunQUnit() {
 
 		$('#txtQUnit').unbind();
 		$('#txtQUnit').jStepper({ minValue: 0, maxValue: 23, minLength: 2, minDecimals: 3, maxDecimals: 3, decimalSeparator: '.' });
-		$('#txtQUnit').val('24');
-		$('#txtQUnit').trigger(objThreeKeyUp);
-		equal($('#txtQUnit').val(), '23.000', 'Inputting 24 with a max of 23 and minDecimals of 3');
+		$('#txtQUnit').val('2');
+		syn.type('4', $('#txtQUnit'));
+
+		setTimeout(function() {
+			assert.equal($('#txtQUnit').val(), '23.000', 'Inputting 24 with a max of 23 and minDecimals of 3');
+			done();
+		}, 100);
 
 	});
 
-	test('Overflow with overflow mode set to ignore', function() {
+	test('Overflow with overflow mode set to ignore', function(assert) {
+
+		var done = assert.async();
 
 		expect(1);
 
@@ -198,11 +206,13 @@ function RunQUnit() {
 		$('#txtQUnit').unbind();
 
 		$('#txtQUnit').jStepper({ minValue: 1, maxValue: 999, minLength: 3, overflowMode: 'ignore' });
-		$('#txtQUnit').val('1111');
-		$('#txtQUnit').trigger(objDownEvent);
-		$('#txtQUnit').trigger(objUpEvent);
-		equal($('#txtQUnit').val(), '111', 'Accidentally typing 1111 in field with a max of 999');
-
+		$('#txtQUnit').val('111');
+		$('#txtQUnit').focus();
+		syn.type('1', $('#txtQUnit'));
+		setTimeout(function() {
+			assert.equal($('#txtQUnit').val(), '111', 'Accidentally typing 1111 in field with a max of 999');
+			done();
+		}, 100);
 	});
 
 
@@ -233,6 +243,36 @@ function RunQUnit() {
 
 	});
 
+	test('Setting options', function() {
+
+		expect(4);
+
+		objUpEvent.keyCode = KEYCODES.UP;
+		objDownEvent.keyCode = KEYCODES.UP;
+
+		$('#txtQUnit').unbind();
+
+		$('#txtQUnit').jStepper({ maxValue: 20 });
+		$('#txtQUnit').val('20');
+		$('#txtQUnit').trigger(objDownEvent);
+		$('#txtQUnit').trigger(objUpEvent);
+		equal($('#txtQUnit').val(), '20', 'Trying to go up but hitting the ceiling');
+
+		$('#txtQUnit').jStepper('option', 'maxValue', 21);
+		$('#txtQUnit').trigger(objDownEvent);
+		$('#txtQUnit').trigger(objUpEvent);
+		equal($('#txtQUnit').val(), '21', 'Trying again after resetting the maxValue higher');
+
+		$('#txtQUnit').trigger(objDownEvent);
+		$('#txtQUnit').trigger(objUpEvent);
+		equal($('#txtQUnit').val(), '21', 'Trying again after but hitting the ceiling again this time');
+
+		$('#txtQUnit').jStepper('option', 'maxValue', null);
+		$('#txtQUnit').trigger(objDownEvent);
+		$('#txtQUnit').trigger(objUpEvent);
+		equal($('#txtQUnit').val(), '22', 'Trying again after removing the maxValue');
+
+	});
 
 	// Hiding QUnit fields after testing is complete
 	$('#txtQUnit, #txtQUnit2, #txtQUnit3').hide();

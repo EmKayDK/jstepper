@@ -9,7 +9,7 @@ public partial class test : System.Web.UI.Page {
 		strJqueryVersion = Request.QueryString["jq"];
 		
 		if (strJqueryVersion == null) {
-			strJqueryVersion = "2.1.0";
+			strJqueryVersion = "2.1.3";
 		}
 
 	}
