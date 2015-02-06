@@ -40,6 +40,9 @@
 
 		if (jQuery.isFunction(this.mousewheel)) {
 			this.mousewheel(function(e, intDelta) {
+				if (o.disableMouseWheel) {
+					return;
+				}
 				if (intDelta > 0) { // Up
 
 					var objDownEvent = jQuery.Event('keydown');
@@ -459,7 +462,8 @@
 		maxDecimals: null,
 		disableNonNumeric: true,
 		onStep: null,
-		overflowMode: 'default'
+		overflowMode: 'default',
+		disableMouseWheel: false
 	};
 
 })(jQuery);
