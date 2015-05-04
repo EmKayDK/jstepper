@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.17.1.js"></script>
 	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.metadata/2.0/jquery.metadata.min.js"></script>
 	<script type="text/javascript" src="/scripts/jquery.jstepper.min.js"></script>
-	<script type="text/javascript" src="//rawgit.com/bitovi/syn/master/dist/syn.js"></script>
+	<script type="text/javascript" src="/scripts/syn.js"></script>
 	<script type="text/javascript" src="/scripts/jquery.mousewheel.js"></script>
 	<script type="text/javascript" src="/scripts/tests.js"></script>
 

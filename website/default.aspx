@@ -248,6 +248,11 @@
 	
 	<h1>Changelog</h1>
 
+	<h2>1.5.1 (2015-05-03)</h2>
+	<ul>
+		<li>Fixed a <a href="https://github.com/EmKayDK/jstepper/issues/9">bug</a> reported at Github.</li>
+	</ul>
+
 	<h2>1.5.0 (2015-01-24)</h2>
 	<ul>
 		<li>A few bugfixes reported at Github. Thanks, jedierikb!</li>
