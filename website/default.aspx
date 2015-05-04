@@ -21,7 +21,7 @@
 
 	Auto mousewheel support if Brandon Aaron's <a href="http://plugins.jquery.com/mousewheel/">mousewheel plugin</a> has also been included on the page (try it by hovering over the field below and scroll your mouse).
 
-	<h2>Download (v. 1.5.0)</h2>
+	<h2>Download (v. 1.5.1)</h2>
 	(Tested with jQuery 1.4, 1.11.2 and 2.1.3 in IE11, Firefox, Chrome and Safari)<br />
 	<br />
 	<a href="/scripts/jquery.jstepper.js">Normal</a><br />
