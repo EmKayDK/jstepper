@@ -60,7 +60,7 @@
 		}
 
 		this.blur(function() {
-			CheckValue(this, null);
+			CheckValue(this, null, true);
 		});
 
 		this.keydown(function(e) {
@@ -102,7 +102,7 @@
 
 		});
 
-		var CheckValue = function(objElm, key) {
+		var CheckValue = function(objElm, key, minCheck) {
 
 			var $objElm = jQuery(objElm);
 
@@ -117,14 +117,14 @@
 			var bOverflow = false;
 
 			if (o.maxValue !== null) {
-				if (strValue > o.maxValue) {
+				if (parseFloat(strValue) > parseFloat(o.maxValue)) {
 					strValue = o.maxValue;
 					bOverflow = true;
 				}
 			}
 
-			if (o.minValue !== null) {
-				if (strValue < o.minValue && strValue != '') {
+			if (o.minValue !== null && checkMin) {
+				if (strValue != '' && parseFloat(strValue) < parseFloat(o.minValue)) {
 					strValue = o.minValue;
 					bOverflow = true;
 				}
