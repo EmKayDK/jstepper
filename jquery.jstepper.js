@@ -74,24 +74,15 @@
 			} else {
 
 				if (o.overflowMode === 'ignore') {
-
-					if (o.maxValue) {
-
-						if ($(this).val().length >= o.maxValue.toString().length) {
-
-							if (
-								((key >= 48 && key <= 57) || (key >= 96 && key <= 105)) &&
-								(this.selectionStart === this.selectionEnd)
-								) {
-								return false;
-							}
-
-						}
-
-					}
-
+            var value = $(this).val().indexOf("-") === 0 ? o.minValue : o.maxValue;
+            if (value) {
+                if ($(this).val().length >= value.toString().length) {
+                    if (((key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
+                        return false;
+                    }
+                }
+            }
 				}
-
 			}
 
 		});
