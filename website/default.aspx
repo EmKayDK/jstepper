@@ -28,6 +28,10 @@
 	<a href="/scripts/jquery.jstepper.min.js">Minified for production</a> (Only 4,0 KB and 1,8 KB gzipped)<br />
 	<br />
 
+	<h2>Source code</h2>
+	The source code is hosted at GitHub: <a href="https://github.com/EmKayDK/jstepper">https://github.com/EmKayDK/jstepper</a>
+	<br />
+
 	<h2>Test</h2>
 
 	<form method="post" action="/">
@@ -36,7 +40,7 @@
 		<input type="text" name="txtTesting" id="txtTesting" value="0" /><br />
 		<br />
 
-		<label for="txtScript">Feel free to test jStepper by changing the script for the text field above.</label><br />
+		<label for="txtScript">Feel free to test jStepper by changing the script for the field above and hit "Apply script".</label><br />
 		<textarea name="txtScript" id="txtScript"><%=GetTestScript() %></textarea><br />
 		<br />
 
@@ -248,9 +252,14 @@
 	
 	<h1>Changelog</h1>
 
+	<h2>1.5.2 (2015-09-18)</h2>
+	<ul>
+		<li>Fixed a <a href="https://github.com/EmKayDK/jstepper/issues/13">issue #13</a> (thanks ngocdiepnguyen) reported at Github.</li>
+	</ul>
+
 	<h2>1.5.1 (2015-05-03)</h2>
 	<ul>
-		<li>Fixed a <a href="https://github.com/EmKayDK/jstepper/issues/9">bug</a> reported at Github.</li>
+		<li>Fixed <a href="https://github.com/EmKayDK/jstepper/issues/9">issue #9</a> (thanks inexuscore) reported at Github.</li>
 	</ul>
 
 	<h2>1.5.0 (2015-01-24)</h2>

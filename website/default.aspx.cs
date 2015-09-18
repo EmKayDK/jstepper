@@ -1,6 +1,17 @@
-﻿
+﻿using System;
+
 public partial class _default : System.Web.UI.Page {
-	
+
+	protected void Page_Load(object sender, EventArgs e) {
+
+		string strPath = Request.RawUrl;
+
+		if (strPath.ToLower().Contains("default.aspx")) {
+			Response.Redirect("/");
+		}
+		
+	}
+
 	public string GetTestScript() {
 
 		string strTestScript = Request.Form["txtScript"];

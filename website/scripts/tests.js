@@ -278,18 +278,22 @@ function RunQUnit() {
 
 	test('Validating value of field', function() {
 
-		expect(2);
-		
+		expect(3);
+
 		$('#txtQUnit').unbind();
 
 		$('#txtQUnit').jStepper();
 		$('#txtQUnit').val('123-456');
 		$('#txtQUnit').trigger(objBlurEvent);
 		equal($('#txtQUnit').val(), '123456', 'Inputting a dash at the wrong place');
-		
+
 		$('#txtQUnit').val('123-');
 		$('#txtQUnit').trigger(objBlurEvent);
 		equal($('#txtQUnit').val(), '123', 'Inputting a dash at the wrong place, try 2');
+
+		$('#txtQUnit').val('123----456');
+		$('#txtQUnit').trigger(objBlurEvent);
+		equal($('#txtQUnit').val(), '123456', 'Pasting in to many dashes');
 
 	});
 
