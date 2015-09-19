@@ -278,7 +278,7 @@ function RunQUnit() {
 
 	test('Validating value of field', function() {
 
-		expect(3);
+		expect(4);
 
 		$('#txtQUnit').unbind();
 
@@ -294,6 +294,12 @@ function RunQUnit() {
 		$('#txtQUnit').val('123----456');
 		$('#txtQUnit').trigger(objBlurEvent);
 		equal($('#txtQUnit').val(), '123456', 'Pasting in to many dashes');
+
+		$('#txtQUnit').unbind();
+		$('#txtQUnit').jStepper({ minValue: -1111, maxValue: 20, overflowMode: 'ignore' });
+		$('#txtQUnit').val('-1');
+		syn.type('1', $('#txtQUnit'));
+		equal($('#txtQUnit').val(), '-11', 'Writing a negative number that is too long compared to maxValue');
 
 	});
 
