@@ -127,7 +127,7 @@
 			}
 
 			if (o.minValue !== null) {
-				if (strValue < o.minValue && strValue != '') {
+				if (strValue != '' && parseFloat(strValue) < parseFloat(o.minValue)) {
 					strValue = o.minValue;
 					bOverflow = true;
 				}
