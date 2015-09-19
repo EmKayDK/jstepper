@@ -43,6 +43,8 @@ function RunQUnit() {
 	var objUpEvent = jQuery.Event('keyup');
 	objUpEvent.keyCode = KEYCODES.UP;
 
+	var objBlurEvent = jQuery.Event('blur');
+
 	module('Stepping with ints');
 
 	test('Stepping up', function() {
@@ -271,6 +273,23 @@ function RunQUnit() {
 		$('#txtQUnit').trigger(objDownEvent);
 		$('#txtQUnit').trigger(objUpEvent);
 		equal($('#txtQUnit').val(), '22', 'Trying again after removing the maxValue');
+
+	});
+
+	test('Validating value of field', function() {
+
+		expect(2);
+		
+		$('#txtQUnit').unbind();
+
+		$('#txtQUnit').jStepper();
+		$('#txtQUnit').val('123-456');
+		$('#txtQUnit').trigger(objBlurEvent);
+		equal($('#txtQUnit').val(), '123456', 'Inputting a dash at the wrong place');
+		
+		$('#txtQUnit').val('123-');
+		$('#txtQUnit').trigger(objBlurEvent);
+		equal($('#txtQUnit').val(), '123', 'Inputting a dash at the wrong place, try 2');
 
 	});
 
