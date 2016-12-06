@@ -36,8 +36,8 @@ if (strTestScript == null) {
 
 	Auto mousewheel support if Brandon Aaron's <a href="http://plugins.jquery.com/mousewheel/">mousewheel plugin</a> has also been included on the page (try it by hovering over the field below and scroll your mouse).
 
-	<h2>Download (v. 1.5.3)</h2>
-	(Tested with jQuery 1.4, 1.11.2 and 2.1.3 in IE11, Firefox, Chrome and Safari)<br />
+	<h2>Download (v. 1.6.0)</h2>
+	(Tested with jQuery 1.12.4, 2.2.4 and 3.1.1 in Chrome, Safari and Firefox)<br />
 	<br />
 	<a href="/jquery.jstepper.js">Normal</a><br />
 	<a href="/jquery.jstepper.min.js">Minified for production</a> (Only 4,0 KB and 1,8 KB gzipped)<br />
@@ -266,6 +266,11 @@ if (strTestScript == null) {
 	$(obj).jStepper('option', 'maxValue', null);
 	
 	<h1>Changelog</h1>
+
+    <h2>1.6.0 (2016-12-??)</h2>
+	<ul>
+		<li>Changed the tests to feature the latest versions of the 3 major versions (currently 1.12.4, 2.2.4 & 3.1.1).</li>
+	</ul>
 
 	<h2>1.5.3 (2015-09-19)</h2>
 	<ul>

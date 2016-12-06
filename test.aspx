@@ -4,7 +4,7 @@
 string strJqueryVersion = Request.QueryString["jq"];
 
 if (strJqueryVersion == null) {
-    strJqueryVersion = "2.1.3";
+    strJqueryVersion = "3.1.1";
 }
 
 %>
