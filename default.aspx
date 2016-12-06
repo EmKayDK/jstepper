@@ -1,4 +1,19 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="default.aspx.cs" Inherits="_default" %>
+﻿<%@ Page Language="C#" %>
+<%
+
+string strPath = Request.RawUrl;
+
+if (strPath.ToLower().Contains("default.aspx")) {
+	Response.RedirectPermanent("/");
+}
+
+string strTestScript = Request.Form["txtScript"];
+
+if (strTestScript == null) {
+	strTestScript = "$('#txtTesting').jStepper({minValue:0, maxValue:23, minLength:2});";
+}        
+
+%>
 
 <!DOCTYPE html>
 
@@ -7,7 +22,7 @@
 	<title>jStepper - A jQuery plugin by EmKay</title>
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-	<script type="text/javascript" src="/scripts/jquery.jstepper.min.js"></script>
+	<script type="text/javascript" src="/jquery.jstepper.js"></script>
 	<script type="text/javascript" src="/scripts/jquery.mousewheel.js"></script>
 	<script type="text/javascript" src="/scripts/scripts.js"></script>
 	<link rel="Stylesheet" href="/style/main.css" type="text/css" />
@@ -24,8 +39,8 @@
 	<h2>Download (v. 1.5.3)</h2>
 	(Tested with jQuery 1.4, 1.11.2 and 2.1.3 in IE11, Firefox, Chrome and Safari)<br />
 	<br />
-	<a href="/scripts/jquery.jstepper.js">Normal</a><br />
-	<a href="/scripts/jquery.jstepper.min.js">Minified for production</a> (Only 4,0 KB and 1,8 KB gzipped)<br />
+	<a href="/jquery.jstepper.js">Normal</a><br />
+	<a href="/jquery.jstepper.min.js">Minified for production</a> (Only 4,0 KB and 1,8 KB gzipped)<br />
 	<br />
 
 	<h2>Source code</h2>
@@ -41,14 +56,14 @@
 		<br />
 
 		<label for="txtScript">Feel free to test jStepper by changing the script for the field above and hit "Apply script".</label><br />
-		<textarea name="txtScript" id="txtScript"><%=GetTestScript() %></textarea><br />
+		<textarea name="txtScript" id="txtScript"><%=strTestScript %></textarea><br />
 		<br />
 
 		<button type="submit" id="btnSubmit">Apply script</button>
 
 	</form>
 
-	<%=GetTestScriptTag() %>
+	<script type="text/javascript">$(document).ready(function() {<%=strTestScript%>});</script>
 
 	<h2>Options</h2>
 
@@ -294,6 +309,22 @@
 		<li>Bugfix by <a href="http://stefantsov.com/">Dima Stefantsov</a> regarding cursor position when using a non changing keypress in the field (Thanks dude!)</li>
 		<li>Now using <a href="http://javascript-minifier.com/">http://javascript-minifier.com/</a> for the minified version.</li>
 	</ul>
+
+    <h1>Todo</h1>
+    <ol>
+        <li>Fix of issues reported at GitHub</li>
+        <li>
+            Better website (the page you are currently looking at)
+            <ul>
+                <li>Implementation of Bootstrap CSS for more visually appealing experience</li>
+                <li>More contact information</li>
+                <li>Link to test suite</li>
+                <li>Better navigation on the page (maybe some ScrollSpy or other fancy menu stuff)</li>
+            </ul>
+        </li>
+    </ol>
+
+
 	<script>
 
 		(function(i, s, o, g, r, a, m) {
