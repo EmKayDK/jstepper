@@ -1,4 +1,4 @@
-﻿// jStepper 1.5.3
+﻿// jStepper 1.5.4
 
 // A jQuery plugin by EmKay usable for making a numeric textfield value easy to increase or decrease.
 
@@ -120,7 +120,7 @@
 			var bOverflow = false;
 
 			if (o.maxValue !== null) {
-				if (strValue > o.maxValue) {
+				if (parseFloat(strValue) > o.maxValue) {
 					strValue = o.maxValue;
 					bOverflow = true;
 				}
