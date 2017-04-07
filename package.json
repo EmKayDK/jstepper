@@ -1,0 +1,42 @@
+{
+	"name": "jstepper",
+	"title": "jStepper",
+	"description": "A jQuery plugin for making a numeric textfield value easy to increase or decrease.",
+	"keywords": [
+		"jstepper",
+		"step",
+		"stepper",
+		"number",
+		"numeric",
+		"spinner",
+		"jquery-plugin",
+		"ecosystem:jquery"
+	],
+	"version": "1.5.4",
+	"author": "Martin Kruse (EmKay)",
+	"maintainers": [
+		"Martin Kruse (EmKay)"
+	],
+	"bugs": {
+		"url": "https://github.com/EmKayDK/jstepper/issues"
+	},
+	"homepage": "http://jstepper.emkay.dk/",
+	"docs": "http://jstepper.emkay.dk/",
+	"download": "http://jstepper.emkay.dk/",
+	"dependencies": {
+		"jquery": ">=1.4"
+	},
+	"main": "jquery.jstepper.min.js",
+	"files": [
+		"jquery.jstepper.js",
+		"jquery.jstepper.min.js"
+	],
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/EmKayDK/jstepper.git"
+	},
+	"license": "ISC"
+}
