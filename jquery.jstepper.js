@@ -126,10 +126,13 @@
 				}
 			}
 
-			if (o.minValue !== null) {
-				if (strValue != '' && parseFloat(strValue) < parseFloat(o.minValue)) {
-					strValue = o.minValue;
-					bOverflow = true;
+			//TODO: This option should only have effect if the event causing the CheckValue function to run is a key up or down.
+			if (!o.disableMinValueCheckOnKey) {
+				if (o.minValue !== null) {
+					if (strValue != '' && parseFloat(strValue) < parseFloat(o.minValue)) {
+						strValue = o.minValue;
+						bOverflow = true;
+					}
 				}
 			}
 
@@ -209,7 +212,7 @@
 					bLimitReached = true;
 				}
 			}
-
+			
 			numValue = numValue.toString().replace(/\./, o.decimalSeparator);
 
 			$objElm.val(numValue);
@@ -463,7 +466,8 @@
 		maxDecimals: null,
 		disableNonNumeric: true,
 		onStep: null,
-		overflowMode: 'default'
+		overflowMode: 'default',
+		disableMinValueCheckOnKey: false
 	};
 
 })(jQuery);
